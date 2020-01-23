@@ -12,26 +12,26 @@ const morgan      =   require('morgan')
  * Extend morgan request logger
  */
 morgan.token('person', (request) => {
-    if(request.method !== 'GET'){
-      return JSON.stringify(request.body)
-    }
+	if(request.method !== 'GET'){
+		return JSON.stringify(request.body)
+	}
 })
 
 /**
  * Morgan terminal logs
  */
 app.use(
-    morgan(':method :url :status :res[content-length] - :response-time ms :person')
-  )
+	morgan(':method :url :status :res[content-length] - :response-time ms :person')
+)
 
 /**
  * MongoDB Schema
  */
 const blogSchema = mongoose.Schema({
-    title : String,
-    author: String,
-    url : String,
-    likes: Number
+	title : String,
+	author: String,
+	url : String,
+	likes: Number
 })
 
 /**
@@ -44,12 +44,12 @@ const mongoUrl = process.env.MONGODB_URI
 console.log('connecting to ',mongoUrl)
 
 mongoose.connect(mongoUrl,{useNewUrlParser:true, useUnifiedTopology: true})
-    .then(result =>{
-        console.log('Connected to MongoDB')
-    })
-    .catch((error)=>{
-        console.log("error connecting to MongoDB", error.message)
-    })
+	.then(() =>{
+		console.log('Connected to MongoDB')
+	})
+	.catch((error)=>{
+		console.log('error connecting to MongoDB', error.message)
+	})
 
 
 /**
@@ -66,28 +66,28 @@ app.use(bodyParser.json())
  * MongoDB get request
  */
 app.get('/api/blogs', (request, response) => {
-    Blog
-        .find({})
-        .then(blogs => {
-            response.json(blogs)
-        })
+	Blog
+		.find({})
+		.then(blogs => {
+			response.json(blogs)
+		})
 })
 
 /**
  * MongoDB post request
  */
 app.post('/api/blogs', (request, response) => {
-    const blog = new Blog(request.body)
+	const blog = new Blog(request.body)
 
-    blog
-        .save()
-        .then(result =>{
-            response.status(201).json(result)
-        })
+	blog
+		.save()
+		.then(result =>{
+			response.status(201).json(result)
+		})
 })
 
 const PORT = process.env.PORT || 3001
 
 app.listen(PORT, () =>{
-    console.log(`Server running on port ${PORT}`)
+	console.log(`Server running on port ${PORT}`)
 })
