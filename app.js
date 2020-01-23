@@ -1,32 +1,28 @@
-require('dotenv').config()
-const http        =   require('http')
+const config      =   require('./utils/config')
 const express     =   require('express')
-const app         =   express()
 const bodyParser  =   require('body-parser') 
+const app         =   express()
 const cors        =   require('cors')
-const morgan      =   require('morgan')
-
 /**
  * DB connection
  */
 const blogRouters  = require('./controllers/blogs')
-
-
-/**
- * Extend morgan request logger
- */
-morgan.token('person', (request) => {
-	if(request.method !== 'GET'){
-		return JSON.stringify(request.body)
-	}
-})
+const middleware   = require('./utils/middleware')
+const mongoose     = require('mongoose')
 
 /**
- * Morgan terminal logs
+ * Verify connections to MongoDB
+ * @param config.MONGODB_URI connection from .env
+ * @param useNewUrlParser remove depreceated warning
  */
-app.use(
-	morgan(':method :url :status :res[content-length] - :response-time ms :person')
-)
+mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+	.then(() => {
+		console.log('Connected to MongoDB')
+	})
+	.catch((error) => {
+		console.log('error connection to MongoDB:', error.message)
+	})
+
 
 /**
  * Enables cross origin policy
@@ -39,9 +35,19 @@ app.use(cors())
 app.use(bodyParser.json())
 
 /**
+ * Request logger middleware
+ */
+app.use(middleware.morganLogger)
+
+/**
  * Base url for api
  */
 app.use('/api/blogs', blogRouters)
+
+/**
+ * Unknown endpoint middleware
+ */
+
 
 
 module.exports = app
