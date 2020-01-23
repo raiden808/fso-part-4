@@ -4,8 +4,9 @@ const express     =   require('express')
 const app         =   express()
 const bodyParser  =   require('body-parser') 
 const cors        =   require('cors')
-const mongoose    =   require('mongoose')
 const morgan      =   require('morgan')
+
+const blogRouters  = require('./controllers/blogs')
 
 
 /**
@@ -25,34 +26,6 @@ app.use(
 )
 
 /**
- * MongoDB Schema
- */
-const blogSchema = mongoose.Schema({
-	title : String,
-	author: String,
-	url : String,
-	likes: Number
-})
-
-/**
- * Initialize Schema
- */
-const Blog = mongoose.model('Blog', blogSchema)
-
-const mongoUrl = process.env.MONGODB_URI
-
-console.log('connecting to ',mongoUrl)
-
-mongoose.connect(mongoUrl,{useNewUrlParser:true, useUnifiedTopology: true})
-	.then(() =>{
-		console.log('Connected to MongoDB')
-	})
-	.catch((error)=>{
-		console.log('error connecting to MongoDB', error.message)
-	})
-
-
-/**
  * Enables cross origin policy
  */
 app.use(cors())
@@ -63,28 +36,10 @@ app.use(cors())
 app.use(bodyParser.json())
 
 /**
- * MongoDB get request
+ * Base url for api
  */
-app.get('/api/blogs', (request, response) => {
-	Blog
-		.find({})
-		.then(blogs => {
-			response.json(blogs)
-		})
-})
+app.use('/api/blogs', blogRouters)
 
-/**
- * MongoDB post request
- */
-app.post('/api/blogs', (request, response) => {
-	const blog = new Blog(request.body)
-
-	blog
-		.save()
-		.then(result =>{
-			response.status(201).json(result)
-		})
-})
 
 const PORT = process.env.PORT || 3001
 
