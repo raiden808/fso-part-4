@@ -6,6 +6,9 @@ const bodyParser  =   require('body-parser')
 const cors        =   require('cors')
 const mongoose    =   require('mongoose')
 
+/**
+ * MongoDB Schema
+ */
 const blogSchema = mongoose.Schema({
     title : String,
     author: String,
@@ -13,15 +16,28 @@ const blogSchema = mongoose.Schema({
     likes: Number
 })
 
+/**
+ * Initialize Schema
+ */
 const Blog = mongoose.model('Blog', blogSchema)
 
 const mongoUrl = process.env.MONGODB_URI
 
 mongoose.connect(mongoUrl, { useNewUrlParser: true })
 
+/**
+ * Enables cross origin policy
+ */
 app.use(cors())
+
+/**
+ * Enable request.body access  
+ */
 app.use(bodyParser.json())
 
+/**
+ * MongoDB get request
+ */
 app.get('/api/blogs', (request, response) => {
     Blog
         .find({})
@@ -30,6 +46,9 @@ app.get('/api/blogs', (request, response) => {
         })
 })
 
+/**
+ * MongoDB post request
+ */
 app.post('/api/blogs', (request, response) => {
     const blog = new Blog(request.body)
 
