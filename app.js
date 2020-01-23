@@ -3,11 +3,17 @@ const express     =   require('express')
 const bodyParser  =   require('body-parser') 
 const app         =   express()
 const cors        =   require('cors')
+
 /**
  * DB connection
  */
 const blogRouters  = require('./controllers/blogs')
+
+/**
+ * Error logging middleware
+ */
 const middleware   = require('./utils/middleware')
+
 const mongoose     = require('mongoose')
 
 /**
@@ -47,7 +53,12 @@ app.use('/api/blogs', blogRouters)
 /**
  * Unknown endpoint middleware
  */
+app.use(middleware.unknownEndpoint)
 
+/**
+ * Custom error handling middleware
+ */
+app.use(middleware.errorHandler)
 
 
 module.exports = app
