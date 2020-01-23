@@ -6,6 +6,9 @@ const bodyParser  =   require('body-parser')
 const cors        =   require('cors')
 const morgan      =   require('morgan')
 
+/**
+ * DB connection
+ */
 const blogRouters  = require('./controllers/blogs')
 
 
