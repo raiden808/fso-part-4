@@ -5,6 +5,24 @@ const app         =   express()
 const bodyParser  =   require('body-parser') 
 const cors        =   require('cors')
 const mongoose    =   require('mongoose')
+const morgan      =   require('morgan')
+
+
+/**
+ * Extend morgan request logger
+ */
+morgan.token('person', (request) => {
+    if(request.method !== 'GET'){
+      return JSON.stringify(request.body)
+    }
+})
+
+/**
+ * Morgan terminal logs
+ */
+app.use(
+    morgan(':method :url :status :res[content-length] - :response-time ms :person')
+  )
 
 /**
  * MongoDB Schema
@@ -23,7 +41,16 @@ const Blog = mongoose.model('Blog', blogSchema)
 
 const mongoUrl = process.env.MONGODB_URI
 
-mongoose.connect(mongoUrl, { useNewUrlParser: true })
+console.log('connecting to ',mongoUrl)
+
+mongoose.connect(mongoUrl,{useNewUrlParser:true, useUnifiedTopology: true})
+    .then(result =>{
+        console.log('Connected to MongoDB')
+    })
+    .catch((error)=>{
+        console.log("error connecting to MongoDB", error.message)
+    })
+
 
 /**
  * Enables cross origin policy
