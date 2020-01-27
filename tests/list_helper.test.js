@@ -1,4 +1,8 @@
-/* eslint-disable no-undef */
+/** 
+ * Unit testing using jests
+ */
+
+
 const listHelper = require('../utils/list_helper')
 
 test('dummy returns one', () => {

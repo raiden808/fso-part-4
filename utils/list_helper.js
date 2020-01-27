@@ -1,3 +1,7 @@
+/**
+ * Tests using Jest
+ */
+
 const dummy = () => {
 	return 1
 }
