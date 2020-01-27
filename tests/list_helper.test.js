@@ -2,6 +2,11 @@
  * Unit testing using jests
  */
 
+/**
+* Test single function
+* npx jest -t 'dummy returns one'
+*/
+
 
 const listHelper = require('../utils/list_helper')
 
