@@ -7,6 +7,12 @@
 * npx jest -t 'dummy returns one'
 */
 
+/**
+ * Test single function using .only
+ * This will be the only jest function that will run
+ * test.only(/description/)
+ */
+
 
 const listHelper = require('../utils/list_helper')
 
@@ -22,6 +28,7 @@ describe('Total likes', () => {
 		{
 			'_id': '5e291dbc46accf375cf6a23d',
 			'title': 'Test Blog',
+			'author': 'Siakam Pascal',
 			'url': 'google.com',
 			'likes': 5,
 			'__v': 0
@@ -41,3 +48,35 @@ describe('Total likes', () => {
 		expect(result).toBe(5)
 	})
 })
+
+describe('favorite blog', () => {
+
+	const can1 = 
+	{
+		title: 'Test Blog',
+		author: 'Siakam Pascal',
+		likes:5
+	}
+	
+
+	const blogs  = [
+		{
+			'title': 'Test Blog',
+			'author': 'Siakam Pascal',
+			'likes': 5
+		},
+		{
+			'title': 'Test Blog',
+			'author': 'Bran De Ipille',
+			'likes': 0,
+		},
+	]
+
+	console.log('aaaaaaaaaaaaaaaa',listHelper.favoriteBlog(blogs))
+	console.log('<br />', can1[0])
+
+	test('have all the same properties', () => {
+		expect(listHelper.favoriteBlog(blogs)).toEqual(can1)
+	})
+})
+

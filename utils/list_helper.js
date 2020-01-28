@@ -32,7 +32,9 @@ const favoriteBlog = (blogs) => {
 	/**
      * finds and retrieve largst value in an object.
      */
-	return blogs.find(element => element.likes == max)
+	let topBlog = blogs.find(element => element.likes == max)
+
+	return topBlog
 }
 
 module.exports = {
