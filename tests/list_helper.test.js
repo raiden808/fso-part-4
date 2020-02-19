@@ -13,8 +13,38 @@
  * test.only(/description/)
  */
 
+/**
+ * Test Library
+ */
+const supertest = require('supertest')
+
+/**
+ * MongoDb Connection
+ */
+const mongoose = require('mongoose')
+
+/**
+ * Express App Root API
+ */
+const app = require('../app')
+
+/**
+ * Establish supertest on API
+ */
+const api = supertest(app)
+
 
 const listHelper = require('../utils/list_helper')
+
+/**
+ * Verifies if test returns json
+ */
+test.only('request returns json', async () => {
+	await api
+		.get('/api/blogs')
+		.expect(200)
+		.expect('Content-Type', /application\/json/)
+})
 
 test('dummy returns one', () => {
 	const blogs = []
