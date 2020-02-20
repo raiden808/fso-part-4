@@ -14,6 +14,14 @@ blogsRouter.get('/', (request,response) => {
 })
 
 /**
+ * Retrieve using async and await
+ */
+blogsRouter.get('/', async (request, response) =>{
+	const blogs = await Blog.find({})
+	response.json(blogs.map(blog => blog.toJSON()))
+})
+
+/**
  * Post request
  */
 blogsRouter.post('/', (request, response, next) => {
