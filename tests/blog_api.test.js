@@ -19,11 +19,6 @@
 const supertest = require('supertest')
 
 /**
- * MongoDb Connection
- */
-const mongoose = require('mongoose')
-
-/**
  * Express App Root API
  */
 const app = require('../app')
