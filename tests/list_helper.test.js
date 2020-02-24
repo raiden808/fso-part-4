@@ -40,6 +40,10 @@ const listHelper = require('../utils/list_helper')
  * Verifies if test returns json
  */
 test.only('request returns json', async () => {
+
+	const test =  await api.get('/api/blogs')
+	console.log('Json Output',test.body)
+
 	await api
 		.get('/api/blogs')
 		.expect(200)
