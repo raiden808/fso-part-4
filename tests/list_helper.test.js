@@ -102,8 +102,8 @@ describe('favorite blog', () => {
 		},
 	]
 
-	console.log('aaaaaaaaaaaaaaaa',listHelper.favoriteBlog(blogs))
-	console.log('<br />', can1[0])
+	// console.log('aaaaaaaaaaaaaaaa',listHelper.favoriteBlog(blogs))
+	// console.log('<br />', can1[0])
 
 	test('have all the same properties', () => {
 		expect(listHelper.favoriteBlog(blogs)).toEqual(can1)
