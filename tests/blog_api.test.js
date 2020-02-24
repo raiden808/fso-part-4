@@ -36,6 +36,34 @@ const api = supertest(app)
 
 const listHelper = require('../utils/list_helper')
 
+const blogApiHelper = require('./blog_helper')
+
+const Blog = require('../models/blog')
+
+/**
+ * Runs before test cases
+ */
+beforeEach( async () => {
+
+	/**
+	 * Reset test env to clean state
+	 */
+	await Blog.deleteMany()
+
+	/**
+	 * seeds mongodb with initial data
+	 */
+	const blogObjects = blogApiHelper.initialBlogs
+		.map(blog => new Blog(blog))
+
+	/**
+	 * Makes sure all promise is done before test on jest
+	 */
+	const promiseArray = blogObjects.map(blog => blog.save())
+	await Promise.all(promiseArray)
+
+})
+
 /**
  * Verifies if test returns json
  */
