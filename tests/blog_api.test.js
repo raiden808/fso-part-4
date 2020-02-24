@@ -59,30 +59,37 @@ beforeEach( async () => {
 
 })
 
-/**
- * Verifies if test returns json
- */
-test('request returns blog json', async () => {
+describe('blog test', () => {
 
-	const test =  await api.get('/api/blogs')
-	console.log('Json Output',test.body)
+	/**
+	 * Verifies if test returns json
+	 */
+	test('request returns blog json', async () => {
 
-	await api
-		.get('/api/blogs')
-		.expect(200)
-		.expect('Content-Type', /application\/json/)
+		const test =  await api.get('/api/blogs')
+		console.log('Json Output',test.body)
+
+		await api
+			.get('/api/blogs')
+			.expect(200)
+			.expect('Content-Type', /application\/json/)
+	})
+
+	/**
+	 * Verify if id exist in json response
+	 */
+	test('check id in blog json', async () => {
+		const blogsJson =  await api.get('/api/blogs')
+
+		console.log('Key exist', blogsJson.body[0])
+
+		expect(blogsJson.body[0].id).toBeDefined()
+	})
+
 })
 
-/**
- * Verify if id exist in json response
- */
-test('check id in blog json', async () => {
-	const blogsJson =  await api.get('/api/blogs')
 
-	console.log('Key exist', blogsJson[0])
 
-	expect(blogsJson.body[0].id).toBeDefined()
-})
 
 test('dummy returns one', () => {
 	const blogs = []
