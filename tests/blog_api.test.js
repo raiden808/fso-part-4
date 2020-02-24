@@ -79,6 +79,8 @@ test('request returns blog json', async () => {
 test('check id in blog json', async () => {
 	const blogsJson =  await api.get('/api/blogs')
 
+	console.log('Key exist', blogsJson[0])
+
 	expect(blogsJson.body[0].id).toBeDefined()
 })
 
