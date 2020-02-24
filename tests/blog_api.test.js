@@ -62,7 +62,7 @@ beforeEach( async () => {
 /**
  * Verifies if test returns json
  */
-test.only('request returns json', async () => {
+test('request returns blog json', async () => {
 
 	const test =  await api.get('/api/blogs')
 	console.log('Json Output',test.body)
@@ -71,6 +71,15 @@ test.only('request returns json', async () => {
 		.get('/api/blogs')
 		.expect(200)
 		.expect('Content-Type', /application\/json/)
+})
+
+/**
+ * Verify if id exist in json response
+ */
+test('check id in blog json', async () => {
+	const blogsJson =  await api.get('/api/blogs')
+
+	expect(blogsJson.body[0].id).toBeDefined()
 })
 
 test('dummy returns one', () => {
