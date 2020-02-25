@@ -86,6 +86,29 @@ describe('blog test', () => {
 		expect(blogsJson.body[0].id).toBeDefined()
 	})
 
+	/**
+	 * Check if like property is missing.
+	 */
+	test('Verify if post works', async () =>{
+
+		const newBlog = new Blog({
+			title: 'New Blog',
+			author: 'New Author',
+			url: 'www.author.com'
+		})
+
+		await newBlog.save()
+
+		const test =  await api.get('/api/blogs')
+		console.log('Json Output',test.body)
+
+		// console.log(newBlog)
+
+		// const allBlogs = await blogApiHelper.blogsInDb()
+
+		// expect(allBlogs.length).toBe(allBlogs.length + 1)
+	})
+
 })
 
 
