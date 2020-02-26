@@ -102,11 +102,10 @@ describe('blog test', () => {
 		const getBlog =  await api.get('/api/blogs')
 
 		expect(getBlog.body.length).toBe(blogApiHelper.initialBlogs.length + 1)
-		// ge the amount of blog list here
+		
+		console.log(getBlog.body)
 
-		// const allBlogs = await blogApiHelper.blogsInDb()
-
-		// expect(allBlogs.length).toBe(allBlogs.length + 1)
+		expect(getBlog.body[1]).toContainEqual(newBlog)
 	})
 
 })
