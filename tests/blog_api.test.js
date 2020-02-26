@@ -99,10 +99,10 @@ describe('blog test', () => {
 
 		await newBlog.save()
 
-		const test =  await api.get('/api/blogs')
-		console.log('Json Output',test.body)
+		const getBlog =  await api.get('/api/blogs')
 
-		// console.log(newBlog)
+		expect(getBlog.body.length).toBe(blogApiHelper.initialBlogs.length + 1)
+		// ge the amount of blog list here
 
 		// const allBlogs = await blogApiHelper.blogsInDb()
 
