@@ -81,7 +81,7 @@ describe('blog test', () => {
 	test('check id in blog json', async () => {
 		const blogsJson =  await api.get('/api/blogs')
 
-		console.log('Key exist', blogsJson.body[0])
+		//console.log('Key exist', blogsJson.body[0])
 
 		expect(blogsJson.body[0].id).toBeDefined()
 	})
@@ -94,18 +94,37 @@ describe('blog test', () => {
 		const newBlog = new Blog({
 			title: 'New Blog',
 			author: 'New Author',
-			url: 'www.author.com'
+			url: 'www.author.com',
+			likes: 3
 		})
 
-		await newBlog.save()
+		await api
+			.post('/api/blogs')
+			.send(newBlog)
+			.expect(200)
 
 		const getBlog =  await api.get('/api/blogs')
 
 		expect(getBlog.body.length).toBe(blogApiHelper.initialBlogs.length + 1)
 		
-		console.log(getBlog.body)
+		console.log('Current posts hello',getBlog.body)
 
 		expect(getBlog.body[1]).toContainEqual(newBlog)
+	})
+
+	/**
+	 * Verify if likes property exist
+	 */
+	test('verifies that if the likes property is missing from the request', async () =>{
+		const newBlog = new Blog({
+			title: 'New Blog1',
+			author: 'New Author1',
+			url: 'www.author1.com'
+		})
+
+		const newSavedBlog = await api.post('/api/blogs').send(newBlog)
+
+		//console.log('Like output',newSavedBlog.body)
 	})
 
 })
