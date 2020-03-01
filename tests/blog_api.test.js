@@ -106,8 +106,6 @@ describe('blog test', () => {
 		const getBlog =  await api.get('/api/blogs')
 
 		expect(getBlog.body.length).toBe(blogApiHelper.initialBlogs.length + 1)
-		
-		console.log('Current posts hello',getBlog.body)
 
 		expect(getBlog.body[1]).toContainEqual(newBlog)
 	})
@@ -124,7 +122,7 @@ describe('blog test', () => {
 
 		const newSavedBlog = await api.post('/api/blogs').send(newBlog)
 
-		//console.log('Like output',newSavedBlog.body)
+		
 	})
 
 })
