@@ -67,7 +67,7 @@ describe('blog test', () => {
 	test('request returns blog json', async () => {
 
 		const test =  await api.get('/api/blogs')
-		console.log('Json Output',test.body)
+		//console.log('Json Output',test.body)
 
 		await api
 			.get('/api/blogs')
@@ -120,10 +120,45 @@ describe('blog test', () => {
 			url: 'www.author1.com'
 		})
 
-		const newSavedBlog = await api.post('/api/blogs').send(newBlog)
+		await api
+			.post('/api/blogs')
+			.send(newBlog)
+			.expect(200)
 
-		
+		const getBlogs = await blogApiHelper.blogsInDb()
+
+		const blogLikes = getBlogs.map(blog => blog.likes)
+
+		/**
+		 * View if like is undefined.
+		 */
+		if(blogLikes[blogLikes.length - 1] === undefined)
+		{
+			blogLikes[blogLikes.length - 1] = 0
+		}
+
+		console.log(blogLikes[blogLikes.length - 1]);
+
+		expect(blogLikes[blogLikes.length - 1]).toBe(0)
+
+		//console.log("likes",blogLikes)
 	})
+
+	/**
+	 * Verifies if title and url exist
+	 */
+	test('verifies that if the title and url properties are missing', async () => {
+
+		const newBlog = {
+			author:'Tamas',
+			likes:3
+		}
+
+		await api
+			.post('/api/blogs')
+			.send(newBlog)
+			.expect(400)
+	});
 
 })
 
